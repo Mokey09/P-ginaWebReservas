@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Naranja</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@coreui/coreui@5.0.0/dist/css/coreui.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.min.css">
+    <link rel="icon" href="img/721098.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@5.0.0/dist/js/coreui.bundle.min.js"></script>
+    <script src="main.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-warning-subtle">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="@">HOTEL NARANJA</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMenu">
+                <ul class="navbar-nav w-100 mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">INICIO</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="servicios.html">SERVICIOS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="habitaciones.html">HABITACIONES</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="fotos.html">FOTOS</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="position-relative ms-auto">
+                <a class="nav-link position-relative" href="#" onclick="mostrarCarritoNavbar()">
+                    🛒
+                    <span id="cartCount"
+                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    0
+                    </span>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div id="carritoDropdown"
+        class="bg-light border shadow p-3 rounded"
+        style="display:none;position:absolute;top:70px;right:20px;width:350px;z-index:9999;max-height:400px;overflow-y:auto;">
+        <h5>🛒 Tu carrito</h5>
+        <div id="carritoContenido"></div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <img src="img/imagenHotel.png" class="img-fluid w-100 d-block" alt="Responsive image" style="height: 75vh; object-fit: cover; max-width: 100vw;">
+    </div>
+    <div class="container mt-4">
+        <div class="d-flex flex-row justify-content-center gap-3 mt-3"> 
+            <div>
+                <label class="form-label">Llegada</label>
+                <input type="date" class="form-control" id="entrada">
+            </div>
+            <div>
+                <label class="form-label">Salida</label>
+                <input type="date" class="form-control" id="salida">
+            </div>
+            <div>
+                <label class="form-label">Personas</label>
+                <input type="number" class="form-control" id="personas" min="1" placeholder="1">
+            </div>
+            <div>
+                <button class="btn btn-warning fs-2" id="btnBuscar">Buscar</button>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-3">
+        <h4 id="infoFechas"></h4>
+        <h4 id="infoPersonas"></h4>
+        <h4 id="infoNoches"></h4>
+    </div>
+    <br>
+    <div class="container bg-warning-subtle px-5 overflow-hidden">
+        <div class="row g-3 mt-3 mb-4 flex-column align-items-center mx-0">
+            <div class="col-12">
+                <div class="hover-zoom hover-shadow ripple d-flex">
+                    <img src="img/habitacion-individual-madrid-1030x630.jpg" style="width: 350px; height: 250px; object-fit: cover; flex-shrink: 0;">
+                    <div class="px-4 flex-grow-1">
+                        <h2>Habitacion individual</h2>
+                        <h4>Ideal para viajeros que buscan tranquilidad y funcionalidad.</h4>
+                        <select class="form-control tipoPension">
+                            <option value="" data-precio="0">Selecciona pensión por día</option>
+                            <option value="desayuno" data-precio="50">Alojamiento y Desayuno - 50€</option>
+                            <option value="completa" data-precio="90">Pensión Completa - 90€</option>
+                            <option value="todo" data-precio="120">Todo Incluido - 120€</option>
+                        </select>
+                        <p class="noches">Noches: 0</p>
+                        <p class="total">Total: 0€</p>
+                        <button class="btn btn-warning mt-2" onclick="reservar(this)">Reservar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="hover-zoom hover-shadow ripple d-flex">
+                    <img src="img/doble.jpg" style="width: 350px; height: 250px; object-fit: cover; flex-shrink: 0;">
+                    <div class="px-4 flex-grow-1">
+                        <h2>Habitacion doble</h2>
+                        <h4>Pensada para parejas o amigos, combina amplitud y confort.</h4>
+                        <select class="form-control tipoPension">
+                            <option value="" data-precio="0">Selecciona pensión por día</option>
+                            <option value="desayuno" data-precio="90">Alojamiento y Desayuno - 90€</option>
+                            <option value="completa" data-precio="130">Pensión Completa - 130€</option>
+                            <option value="todo" data-precio="150">Todo Incluido - 150€</option>
+                        </select>
+                        <p class="noches">Noches: 0</p>
+                        <p class="total">Total: 0€</p>
+                        <button class="btn btn-warning mt-2" onclick="reservar(this)">Reservar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="hover-zoom hover-shadow ripple d-flex">
+                    <img src="img/cuadruple.jpg" style="width: 350px; height: 250px; object-fit: cover; flex-shrink: 0;">
+                    <div class="px-4 flex-grow-1">
+                        <h2>Habitacion cuadruple</h2>
+                        <h4>La mejor opción para familias o grupos.</h4>
+                        <select class="form-control tipoPension">
+                            <option value="" data-precio="0">Selecciona pensión por día</option>
+                            <option value="desayuno" data-precio="160">Alojamiento y Desayuno - 160€</option>
+                            <option value="completa" data-precio="240">Pensión Completa - 240€</option>
+                            <option value="todo" data-precio="275">Todo Incluido - 275€</option>
+                        </select>
+                        <p class="noches">Noches: 0</p>
+                        <p class="total">Total: 0€</p>
+                        <button class="btn btn-warning mt-2" onclick="reservar(this)">Reservar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="hover-zoom hover-shadow ripple d-flex">
+                    <img src="img/tipos-habitaciones-hotel-portada.jpg" style="width: 350px; height: 250px; object-fit: cover; flex-shrink: 0;">
+                    <div class="px-4 flex-grow-1">
+                        <h2>Suit Presidencial</h2>
+                        <h4>Nuestra opción más exclusiva con el máximo nivel de confort.</h4>
+                        <select class="form-control tipoPension">
+                            <option value="" data-precio="0">Selecciona pensión por día</option>
+                            <option value="desayuno" data-precio="200">Alojamiento y Desayuno - 200€</option>
+                            <option value="completa" data-precio="260">Pensión Completa - 260€</option>
+                            <option value="todo" data-precio="300">Todo Incluido - 300€</option>
+                        </select>
+                        <p class="noches">Noches: 0</p>
+                        <p class="total">Total: 0€</p>
+                        <button class="btn btn-warning mt-2" onclick="reservar(this)">Reservar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <h2>¿Donde encontrarnos?</h2>
+    </div>
+    <div class="container bg-warning-subtle px-5 overflow-hidden">
+        <div class="d-flex justify-content-center">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12466.705709159083!2d-0.025766094711294516!3d38.63332425852895!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd620014c1ff75f9%3A0xd59fb6994068e694!2s03590%20Altea%20Hills%2C%20Alicante!5e0!3m2!1ses!2ses!4v1777283842320!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-100 vh-15"></iframe>
+        </div>
+        <br>
+    </div>
+
+    <script>
+        let entrada, salida, personas, habitaciones;
+
+    document.addEventListener("DOMContentLoaded", () => {
+            entrada = document.getElementById("entrada");
+            salida = document.getElementById("salida");
+            personas = document.getElementById("personas");
+            habitaciones = document.querySelectorAll(".col-12");
+
+            const hoy = new Date();
+            const dia = String(hoy.getDate()).padStart(2, '0');
+            const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+            const año = hoy.getFullYear();
+            const fechaHoy = año + '-' + mes + '-' + dia;
+            entrada.min = fechaHoy;
+            salida.min = fechaHoy;
+
+            actualizarContador();
+            entrada.addEventListener("change", actualizarTodo);
+            salida.addEventListener("change", actualizarTodo);
+            personas.addEventListener("input", actualizarTodo);
+
+            document.getElementById('btnBuscar').addEventListener('click', () => {
+                actualizarTodo();
+                comprobarDisponibilidad();
+            });
+
+            document.querySelectorAll(".tipoPension").forEach(select => {
+                select.addEventListener("change", actualizarTodo);
+            });
+        });
+
+        function calcularNoches() {
+            if (!entrada.value || !salida.value) return 0;
+            const fechaEntrada = new Date(entrada.value);
+            const fechaSalida = new Date(salida.value);
+            const diff = fechaSalida - fechaEntrada;
+            const noches = diff / (1000 * 60 * 60 * 24);
+            return noches > 0 ? noches : 0;
+        }
+
+        function actualizarTodo() {
+            const noches = calcularNoches();
+            habitaciones.forEach(habitacion => {
+                const pension = habitacion.querySelector('.tipoPension');
+                const nochesTexto = habitacion.querySelector('.noches');
+                const totalTexto = habitacion.querySelector('.total');
+                if (!pension) return;
+                const precio = parseFloat(pension.options[pension.selectedIndex].dataset.precio) || 0;
+                const total = noches * precio;
+                nochesTexto.textContent = "Noches: " + noches;
+                totalTexto.textContent = "Total: " + total + "€";
+            });
+        }
+
+        function comprobarDisponibilidad() {
+            const fechaEntrada = entrada.value;
+            const fechaSalida = salida.value;
+            if (!fechaEntrada || !fechaSalida) return;
+
+            fetch(`http://127.0.0.1:3000/disponibilidad?entrada=${fechaEntrada}&salida=${fechaSalida}`)
+                .then(res => res.json())
+                .then(data => {
+                    console.log("Datos disponibilidad:", data);
+
+                    // Resetear todas antes de consultar
+                    document.querySelectorAll('.col-12').forEach(col => {
+                        col.style.display = 'block';
+                    });
+
+                    document.querySelectorAll('.col-12').forEach(col => {
+                        const titulo = col.querySelector('h2');
+                        if (!titulo) return;
+                        const nombreHTML = titulo.textContent.toLowerCase();
+
+                        console.log("Buscando tipo para:", nombreHTML);
+
+                        let info = data.find(d => {
+                            const tipoServidor = (d.Tipo || "").toLowerCase();
+                            return nombreHTML.includes(tipoServidor) ||
+                                (tipoServidor === 'suite' && nombreHTML.includes('suit'));
+                        });
+
+                        console.log("Info encontrada:", info);
+                        console.log("Libres:", info ? info.total - parseInt(info.ocupadas) : 'sin info');
+
+                        const msgAnterior = col.querySelector('.msg-disponibilidad');
+                        if (msgAnterior) msgAnterior.remove();
+
+                        if (info) {
+                            const libres = info.total - parseInt(info.ocupadas);
+
+                            if (libres <= 0) {
+                                col.style.display = 'none';
+                            } else {
+                                col.style.display = 'block';
+                                const msg = document.createElement('p');
+                                msg.classList.add('msg-disponibilidad', 'fw-semibold', 'mt-1', 'text-success');
+                                msg.textContent = `✅ ¡Quedan ${libres} disponibles!`;
+                                col.querySelector('.total').after(msg);
+                            }
+                        }
+                    });
+                })
+                .catch(err => console.error('Error al comprobar disponibilidad:', err));
+        }
+
+        function reservar(btn) {
+            const contenedor = btn.closest('.col-12');
+            const nombre = contenedor.querySelector('h2').textContent;
+            const pensionSelect = contenedor.querySelector('.tipoPension');
+            const pension = pensionSelect.value;
+            const precio = parseFloat(pensionSelect.options[pensionSelect.selectedIndex].dataset.precio) || 0;
+            const nochesTexto = contenedor.querySelector('.noches').textContent;
+            const totalTexto = contenedor.querySelector('.total').textContent;
+            const fechaEntrada = entrada.value;
+            const fechaSalida = salida.value;
+            const nochesNumero = calcularNoches();
+            const totalNumero = nochesNumero * precio;
+
+
+            if (!entrada.value || !salida.value) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Fechas no seleccionadas',
+                    text: 'Por favor selecciona las fechas de entrada y salida'
+                });
+                return;
+            }
+
+            if (!pension) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Pensión no seleccionada',
+                    text: 'Por favor selecciona un tipo de pensión'
+                });
+                return;
+            }
+
+            if (totalNumero === 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Total 0€',
+                    text: 'El total no puede ser 0€, selecciona fechas y pensión'
+                });
+                return;
+            }
+
+            const habitacion = {
+                nombre,
+                pension,
+                precio,
+                noches: nochesTexto,
+                entrada: fechaEntrada,
+                salida: fechaSalida,
+                total: totalTexto,
+                totalNumero: totalNumero
+            };
+
+
+            let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+            carrito.push(habitacion);
+            localStorage.setItem("carrito", JSON.stringify(carrito));
+            actualizarContador();
+            Swal.fire({
+                icon: 'success',
+                title: '¡Añadido!',
+                text: 'Habitación agregada al carrito',
+                timer: 1500,
+                showConfirmButton: false
+            });
+        }
+    </script>
+</body>
+</html>

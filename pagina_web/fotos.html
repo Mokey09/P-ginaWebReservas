@@ -12,6 +12,7 @@
     <link rel="icon" href="img/721098.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@5.0.0/dist/js/coreui.bundle.min.js"></script>
+    <script src="main.js" defer></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-warning-subtle">
@@ -21,12 +22,9 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarMenu">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav w-100 mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="index.html">INICIO</a>
-                    </li>
-                    <li a class="nav-item">
-                        <a class="nav-link" href="#">HOTEL</a>
+                        <a class="nav-link active" href="index.html">INICIO</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="servicios.html">SERVICIOS</a>
@@ -39,49 +37,69 @@
                     </li>
                 </ul>
             </div>
+                <div class="position-relative ms-auto">
+                <a class="nav-link position-relative" href="#" onclick="mostrarCarritoNavbar()">
+                    🛒
+                    <span id="cartCount"
+                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    0
+                    </span>
+                </a>
+            </div>
         </div>
     </nav>
+        <div id="carritoDropdown"
+        class="bg-light border shadow p-3 rounded"
+        style="
+            display:none;
+            position:absolute;
+            top:70px;
+            right:20px;
+            width:350px;
+            z-index:9999;
+            max-height:400px;
+            overflow-y:auto;
+        ">
+        <h5>🛒 Tu carrito</h5>
+        <div id="carritoContenido"></div>
+    </div>
        <div class="d-flex justify-content-center">
     <img src="img/vistas5.jpg" class="img-fluid w-100 d-block" alt="Responsive image" style="height: 75vh; object-fit: cover; max-width: 100vw;">
     </div>
     <div class="container mt-4">
         <div class="d-flex flex-row justify-content-center gap-3 mt-3">
             <div>
-                
-                <label class="form-label fs-3">Reserva ahora!</label>
-            </div>
-            <div>
                 <label class="form-label">Llegada</label>
-                <input type="date" class="form-control">
+                <input type="date" class="form-control" id="entrada">
             </div>
             <div>
                 <label class="form-label">Salida</label>
-                <input type="date" class="form-control">
+                <input type="date" class="form-control" id="salida">
             </div>
             <div>
                 <label class="form-label">Personas</label>
-                <input type="number" class="form-control" min="1" placeholder="1">
+                <input type="number" class="form-control" min="1" placeholder="1" id="personas">
             </div>
             <div>
-                <button class="btn btn-warning fs-2">Buscar</button>
+                <button class="btn btn-warning fs-2" onclick="buscar()">Buscar</button>
             </div>
         </div>
     </div>
     <br>
         <div class="container bg-warning-subtle px-5 overflow-hidden">
         <div class="row g-3 mt-3 mb-4 justify-content-center mx-0">
-            <div class="col-4 " > 
+            <div class="col-12 col-md-4"> 
                 <div class="hover-zoom hover-shadow ripple" >
                    <img src="img/vistas1.jpg" class="img-fluid w-100" style="height: 250px; object-fit: cover;"> 
                 </div>
                 
             </div>
-            <div class="col-4">
+            <div class="col-12 col-md-4">
                 <div class="hover-zoom hover-shadow ripple">
                     <img src="img/vistas2.jpg" class="img-fluid w-100" style="height: 250px; object-fit: cover;">
                 </div>
             </div>
-            <div class="col-4"> 
+            <div class="col-12 col-md-4"> 
                 <div class="hover-zoom hover-shadow ripple">
                     <img src="img/vistas3.jpg" class="img-fluid w-100" style="height: 250px; object-fit: cover;">
                 </div>
@@ -90,18 +108,18 @@
     </div>
         <div class="container bg-warning-subtle px-5 overflow-hidden">
         <div class="row g-3 mt-3 mb-4 justify-content-center mx-0">
-            <div class="col-4 " > 
+            <div class="col-12 col-md-4">
                 <div class="hover-zoom hover-shadow ripple" >
                    <img src="img/vistas4.jpg" class="img-fluid w-100" style="height: 250px; object-fit: cover;"> 
                 </div>
                 
             </div>
-            <div class="col-4">
+            <div class="col-12 col-md-4">
                 <div class="hover-zoom hover-shadow ripple">
                     <img src="img/vistas5.jpg" class="img-fluid w-100" style="height: 250px; object-fit: cover;">
                 </div>
             </div>
-            <div class="col-4"> 
+            <div class="col-12 col-md-4">
                 <div class="hover-zoom hover-shadow ripple">
                     <img src="img/vistas6.jpg" class="img-fluid w-100" style="height: 250px; object-fit: cover;">
                 </div>
@@ -111,18 +129,18 @@
     </div>
         <div class="container bg-warning-subtle px-5 overflow-hidden">
         <div class="row g-3 mt-3 mb-4 justify-content-center mx-0">
-            <div class="col-4 " > 
+            <div class="col-12 col-md-4">
                 <div class="hover-zoom hover-shadow ripple" >
                    <img src="img/vistas7.jpg" class="img-fluid w-100" style="height: 250px; object-fit: cover;"> 
                 </div>
                 
             </div>
-            <div class="col-4">
+            <div class="col-12 col-md-4">
                 <div class="hover-zoom hover-shadow ripple">
                     <img src="img/vistas8.jpg" class="img-fluid w-100" style="height: 250px; object-fit: cover;">
                 </div>
             </div>
-            <div class="col-4"> 
+            <div class="col-12 col-md-4">
                 <div class="hover-zoom hover-shadow ripple">
                     <img src="img/vistas9.jpg" class="img-fluid w-100" style="height: 250px; object-fit: cover;">
                 </div>
@@ -138,5 +156,32 @@
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12466.705709159083!2d-0.025766094711294516!3d38.63332425852895!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd620014c1ff75f9%3A0xd59fb6994068e694!2s03590%20Altea%20Hills%2C%20Alicante!5e0!3m2!1ses!2ses!4v1777283842320!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-100 vh-15"></iframe>
         </div>
     </div>
+
+    <script>
+      
+
+        function buscar() {
+
+            
+
+            const entrada = document.getElementById("entrada").value;
+            const salida = document.getElementById("salida").value;
+            const personas = document.getElementById("personas").value;
+
+            if (!entrada || !salida) {
+                alert("Selecciona fechas");
+                return;
+            }
+
+            // Guardar en el navegador
+            localStorage.setItem("entrada", entrada);
+            localStorage.setItem("salida", salida);
+            localStorage.setItem("personas", personas);
+
+            // Ir a otra página
+            window.location.href = "reservas.html";
+        }
+    </script>
+    
 </body>
 </html>
